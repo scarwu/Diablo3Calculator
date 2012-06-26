@@ -1,0 +1,103 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body, h1 {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	margin: 15px auto 0 auto;
+	text-align: center;
+	width: 1150px;
+}
+
+footer {
+	height: 40px;
+	text-align: center;
+}
+
+#main {
+	margin: 10px auto;
+	width: 1150px;
+	overflow: hidden;
+	font-size: 14px;
+	padding: 15px 25px;
+	border: 1px solid #ccc;
+	background: #EEE;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+#source,
+#result {
+	float: left;
+	padding: 5px 10px 15px 10px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	background: #DDD;
+	width: 260px;
+	display: inline-block;
+	text-align: center;
+}
+
+#source span,
+#result span {
+	display: inline-block;
+	width: 75px;
+	font-size: 16px;
+}
+
+#source input,
+#result input {
+	width: 150px;
+}
+
+#equip {
+	float: left;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	display: inline-block;
+	border: 1px solid #ccc;
+	background: #DDD;
+	width: 544px;
+	min-height: 100px;
+	margin: 0 5px;
+	padding: 0 15px;
+}
+
+#equip > h2 {
+	text-align: center;
+}
+
+#equip > div {
+	display: inline-block;
+	padding: 0px 10px 10px 10px;
+	margin: -5px 2px 5px 2px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px #BBB solid;
+	background: #CCC;
+	width: 244px;
+}
+
+#equip h4 {
+	margin: 10px 0 0 0;
+}
+
+input {
+	padding: 4px 5px;
+	width: 50px;
+	font-size: 14px;
+	border: 1px #CCC solid;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin: 1px 0;
+}
