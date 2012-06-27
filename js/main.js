@@ -327,8 +327,8 @@ $(function() {
 		total_critical_damage = total_critical_damage + total['critical_damage'];
 		total_attack_speed = total_attack_speed + total['attack_speed'];
 		// FIXME
-		// total_min_damage = total_min_damage + total['min_damage'];
-		// total_max_damage = total_max_damage + total['max_damage'];
+		total_min_damage = total_min_damage + total['min_damage'] || 0;
+		total_max_damage = total_max_damage + total['max_damage'] || 0;
 		
 		//
 		var attack_per_second_1 = weapon_attack_per_second_1 * (total_attack_speed / 100 + 1);
@@ -372,5 +372,7 @@ $(function() {
 		$('#result .total_attack_speed').val(total_attack_speed);
 		$('#result .total_critical_chance').val(total_critical_chance - based['critical_chance'] - source['skill']['critical_chance']);
 		$('#result .total_critical_damage').val(total_critical_damage - based['critical_damage'] - source['skill']['critical_damage']);
+		$('#result .total_min_damage').val(total_min_damage);
+		$('#result .total_max_damage').val(total_max_damage);
 	}
 });
