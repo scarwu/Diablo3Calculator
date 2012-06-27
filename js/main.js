@@ -184,21 +184,21 @@ $(function() {
 		//
 		var skill_damage = parseFloat($('#source .skill .damage').val());
 		
-		var dps = weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2;
-		dps = (dps + total_min_damage + total_max_damage) / 2;
-		dps = dps * average_aps;
-		dps = dps * (total_main_attribute / 100 + 1);
-		dps = dps * ((total_critical_chance / 100) * ((total_critical_damage / 100)) + 1);
-		dps = dps * (skill_damage / 100 + 1);
+		var dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
+		dps += (total_min_damage + total_max_damage) / 2;
+		dps *= average_aps;
+		dps *= (total_main_attribute / 100 + 1);
+		dps *= (total_critical_chance * total_critical_damage / 10000) + 1;
+		dps *= skill_damage / 100 + 1;
 		
 		var min = weapon_min_damage_1 + weapon_min_damage_2 + total_min_damage;
-		min = min * (total_main_attribute / 100 + 1);
-		min = min * (skill_damage / 100 + 1);
+		min *= total_main_attribute / 100 + 1;
+		min *= skill_damage / 100 + 1;
 		
 		var max = weapon_max_damage_1 + weapon_max_damage_2 + total_max_damage;
-		max = max * (total_main_attribute / 100 + 1);
-		max = max * (total_critical_damage / 100 + 1);
-		max = max * (skill_damage / 100 + 1);
+		max *= total_main_attribute / 100 + 1;
+		max *= (total_critical_damage + 100) / 100 + 1;
+		max *= skill_damage / 100 + 1;
 		
 		$('#source .attribute .damage_per_second').val(parseInt(dps * 100) / 100);
 		$('#source .attribute .min_damage').val(parseInt(min * 100) / 100);
@@ -344,21 +344,21 @@ $(function() {
 				
 		$('#result .attribute .attack_per_second').val(parseInt(average_aps * 100) / 100);
 		
-		var dps = weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2;
-		dps = (dps + total_min_damage + total_max_damage) / 2;
-		dps = dps * average_aps;
-		dps = dps * (total_main_attribute / 100 + 1);
-		dps = dps * ((total_critical_chance / 100) * ((total_critical_damage / 100)) + 1);
-		dps = dps * (skill_damage / 100 + 1);
+		var dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
+		dps += (total_min_damage + total_max_damage) / 2;
+		dps *= average_aps;
+		dps *= total_main_attribute / 100 + 1;
+		dps *= (total_critical_chance * total_critical_damage / 10000) + 1;
+		dps *= skill_damage / 100 + 1;
 		
 		var min = weapon_min_damage_1 + weapon_min_damage_2 + total_min_damage;
-		min = min * (total_main_attribute / 100 + 1);
-		min = min * (skill_damage / 100 + 1);
+		min *= total_main_attribute / 100 + 1;
+		min *= skill_damage / 100 + 1;
 		
 		var max = weapon_max_damage_1 + weapon_max_damage_2 + total_max_damage;
-		max = max * (total_main_attribute / 100 + 1);
-		max = max * (total_critical_damage / 100 + 1);
-		max = max * (skill_damage / 100 + 1);
+		max *= total_main_attribute / 100 + 1;
+		max *= (total_critical_damage + 100) / 100 + 1;
+		max *= skill_damage / 100 + 1;
 		
 		$('#result .attribute .damage_per_second').val(parseInt(dps * 100) / 100);
 		$('#result .attribute .min_damage').val(parseInt(min * 100) / 100);
