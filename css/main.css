@@ -98,6 +98,11 @@ footer {
 	text-align: center;
 }
 
+#equip .minor_dps {
+	font-size: 14px;
+	font-weight: normal;
+}
+
 input {
 	padding: 4px 5px;
 	width: 50px;
