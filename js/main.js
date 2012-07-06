@@ -2,8 +2,14 @@
 'use strict';
 
 $(function() {
-	var character = getCookie('character');
-	var order = 1;
+	var character = {
+		1: getCookie('character1'),
+		2: getCookie('character2'),
+		3: getCookie('character3'),
+		4: getCookie('character4'),
+		5: getCookie('character5')
+	};
+	var order = getCookie('order');
 	var based = {
 		skill: {
 			damage: 0,
@@ -90,26 +96,45 @@ $(function() {
 
 	// Load Profile
 	function loadProfile() {
-		if(character == null) {
-			character = {
-				order: 1,
-				1: based,
-				2: based,
-				3: based,
-				4: based,
-				5: based
-			};
-		}
+		if(order == null)
+			order = 1;
 		else
-			character = JSON.parse(Base64.decode(character));
+			order = parseInt(order, 10);
+		
+		$.each(character, function(key, value) {
+			if(character[key] == null) {
+				character[key] = {
+					skill: {
+						damage: 0,
+						critical_chance: 0,
+						critical_damage: 0
+					},
+					belt: {},
+					boots: {},
+					braces: {},
+					chest: {},
+					glovers: {},
+					helm: {},
+					pants: {},
+					shoulders: {},
+					amulet: {},
+					ring_1: {},
+					ring_2: {},
+					weapon_1: {},
+					weapon_2: {}
+				};
+			}
+			else
+				character[key] = JSON.parse(Base64.decode(character[key]));
+		});
 	}
 
 	// Svae Profile
 	function saveProfile() {
-		character['order'] = order;
 		character[order] = based;
 		
-		setCookie('character', Base64.encode(JSON.stringify(character)));
+		setCookie('order', order);
+		setCookie('character' + order, Base64.encode(JSON.stringify(character[order])));
 	}
 
 	// Reset
@@ -137,16 +162,11 @@ $(function() {
 		});
 	}
 	
-	function l(input) {
-		console.log(JSON.stringify(input));
-	}
-	
 	$(document).ready(function() {
 		// Load Data
 		loadProfile();
 		
 		// Load
-		order = character['order'];
 		based = character[order];
 		
 		reset();
