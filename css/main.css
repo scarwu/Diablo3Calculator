@@ -6,13 +6,23 @@ html, body, h1 {
 	padding: 0;
 }
 
-header {
+#header {
 	margin: 15px auto 0 auto;
 	text-align: center;
 	width: 1150px;
 }
 
-footer {
+#nav {
+	margin: -10px auto 5px auto;
+	text-align: center;
+}
+
+#nav span {
+	font-size: 16px;
+	margin: 0 5px;
+}
+
+#footer {
 	height: 40px;
 	text-align: center;
 }
@@ -57,6 +67,7 @@ footer {
 	width: 150px;
 }
 
+#setting,
 #equip {
 	float: left;
 	-moz-border-radius: 3px;
@@ -71,13 +82,14 @@ footer {
 	padding: 0 15px;
 }
 
+#setting > h2,
 #equip > h2 {
 	text-align: center;
 }
 
 #equip > div {
 	display: inline-block;
-	padding: 0px 10px 10px 10px;
+	padding: 10px;
 	margin: -5px 2px 5px 2px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -91,16 +103,38 @@ footer {
 	margin: 10px 0 0 0;
 }
 
-#equip .character {
-	width: 528px;
-	margin-bottom: 13px;
-	padding: 5px;
-	text-align: center;
+#equip > div select {
+	width: 100%;
 }
 
 #equip .minor_dps {
 	font-size: 14px;
 	font-weight: normal;
+}
+
+#setting > div {
+	display: inline-block;
+	padding: 10px;
+	margin: -5px 2px 5px 2px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px #BBB solid;
+	background: #CCC;
+	width: 518px;
+}
+
+#setting textarea {
+	margin: -15px auto 0 auto;
+	resize: none;
+	width: 507px;
+	height: 125px;
+	padding: 5px;
+	font-size: 14px;
+	border: 1px #CCC solid;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 input {

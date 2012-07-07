@@ -92,7 +92,7 @@ $(function() {
 		ring_2: false,
 		weapon_1: false,
 		weapon_2: false
-	}
+	};
 
 	// Load Profile
 	function loadProfile() {
@@ -127,6 +127,10 @@ $(function() {
 			else
 				character[key] = JSON.parse(Base64.decode(character[key]));
 		});
+		
+		$.each(character, function(key, value) {
+			$('#setting .' + key).text(Base64.encode(JSON.stringify(character[key])));
+		});
 	}
 
 	// Svae Profile
@@ -135,12 +139,14 @@ $(function() {
 		
 		setCookie('order', order);
 		setCookie('character' + order, Base64.encode(JSON.stringify(character[order])));
+		
+		$('#setting .' + order).text(Base64.encode(JSON.stringify(character[order])));
 	}
 
 	// Reset
 	function reset() {
 		// Set selected character
-		$('.character .order').val(order);
+		$('#equip .based .order').val(order);
 		
 		// Reset field
 		$('input').val(0);
@@ -149,6 +155,7 @@ $(function() {
 		// Set default point
 		$.each(default_point, function(key, value) {
 			$('#based .attribute .' + key).val(value);
+			$('#replacement .attribute .' + key).val(value);
 		});
 		
 		// Set character data
@@ -178,10 +185,28 @@ $(function() {
 		
 		// Minor DPS
 		calculateMinorDPS('based');
-		//calculateMinorDPS('replacement');
+		calculateMinorDPS('replacement');
+
+		$('#nav .equip').click(function() {
+			$('#equip').show();
+			$('#setting').hide();
+		});
+	
+		$('#nav .setting').click(function() {
+			$('#setting').show();
+			$('#equip').hide();
+		});
+		
+		$('#setting textarea').change(function() {
+			var key = $(this).attr('class');
+			var data = Base64.decode($(this).val());
+
+			if(typeof(JSON.parse(data)) == 'object')
+				setCookie('character' + key, $(this).val());
+		});
 
 		// If User change character profile
-		$('.character .order').change(function() {
+		$('#equip .based .order').change(function() {
 			order = $(this).val();
 			based = character[order];
 			
@@ -195,10 +220,75 @@ $(function() {
 			
 			// Minor DPS
 			calculateMinorDPS('based');
-			//calculateMinorDPS('replacement');
+			calculateMinorDPS('replacement');
 			
 			// Save data
 			saveProfile();
+		});
+		
+		$('#equip .replacement .order').change(function() {
+			$('#replacement .skill input').val(0);
+			$('#equip .replacement input').val(0);
+			$('#equip .replacement .minor_dps').text(0);
+			
+			order = $(this).val();
+			
+			if(order != 0) {
+				temp = character[order];
+				$.each(temp, function(key, value) {
+					$.each(value, function(key2, value2) {
+						if(key == 'skill')
+							$('#replacement .skill .' + key2).val(value2);
+						else
+							$('#equip .replacement .' + key + ' .' + key2).val(value2);
+					});
+				});
+			}
+			else {
+				temp = {
+					skill: {
+						damage: 0,
+						critical_chance: 0,
+						critical_damage: 0
+					},
+					belt: {},
+					boots: {},
+					braces: {},
+					chest: {},
+					glovers: {},
+					helm: {},
+					pants: {},
+					shoulders: {},
+					amulet: {},
+					ring_1: {},
+					ring_2: {},
+					weapon_1: {},
+					weapon_2: {}
+				};
+				diff_equip = {
+					skill: false,
+					belt: false,
+					boots: false,
+					braces: false,
+					chest: false,
+					glovers: false,
+					helm: false,
+					pants: false,
+					shoulders: false,
+					amulet: false,
+					ring_1: false,
+					ring_2: false,
+					weapon_1: false,
+					weapon_2: false
+				};
+			}
+
+			diff();
+			totalAttribute(replacement, 'replacement');
+			calculate(replacement, 'replacement');
+			
+			// Minor DPS
+			calculateMinorDPS('replacement');
 		});
 
 		// Based
@@ -224,7 +314,7 @@ $(function() {
 			
 			// Minor DPS
 			calculateMinorDPS('based');
-			//calculateMinorDPS('replacement');
+			calculateMinorDPS('replacement');
 		});
 	
 		$('#equip .based input').change(function() {
@@ -252,7 +342,7 @@ $(function() {
 			
 			// Minor DPS
 			calculateMinorDPS('based');
-			//calculateMinorDPS('replacement');
+			calculateMinorDPS('replacement');
 		});
 
 		// Replacement
@@ -279,6 +369,9 @@ $(function() {
 			
 			diff();
 			calculate(replacement, 'replacement');
+			
+			// Minor DPS
+			calculateMinorDPS('replacement');
 		});
 
 		$('#equip .replacement input').change(function() {
@@ -306,39 +399,46 @@ $(function() {
 			diff();
 			totalAttribute(replacement, 'replacement');
 			calculate(replacement, 'replacement');
+			
+			// Minor DPS
+			calculateMinorDPS('replacement');
 		});
 	});
 	
 	// Find difference
 	function diff() {
-		replacement = {
-			skill: {
-				damage: 0,
-				critical_chance: 0,
-				critical_damage: 0
-			},
-			belt: {},
-			boots: {},
-			braces: {},
-			chest: {},
-			glovers: {},
-			helm: {},
-			pants: {},
-			shoulders: {},
-			amulet: {},
-			ring_1: {},
-			ring_2: {},
-			weapon_1: {},
-			weapon_2: {}
-		};
-		$.each(diff_equip, function(key, value) {
-			if(value) {
-				replacement[key] = temp[key];
-			}
-			else {
-				replacement[key] = based[key];
-			}
-		});
+		if($('#equip .replacement .order').val() == 0) {
+			replacement = {
+				skill: {
+					damage: 0,
+					critical_chance: 0,
+					critical_damage: 0
+				},
+				belt: {},
+				boots: {},
+				braces: {},
+				chest: {},
+				glovers: {},
+				helm: {},
+				pants: {},
+				shoulders: {},
+				amulet: {},
+				ring_1: {},
+				ring_2: {},
+				weapon_1: {},
+				weapon_2: {}
+			};
+			$.each(diff_equip, function(key, value) {
+				if(value) {
+					replacement[key] = temp[key];
+				}
+				else {
+					replacement[key] = based[key];
+				}
+			});
+		}
+		else
+			replacement = temp;
 	}
 
 	function totalAttribute(data, target) {
@@ -367,9 +467,16 @@ $(function() {
 	}
 
 	function calculateMinorDPS(target) {
+		$('#equip .' + target + ' .minor_dps').text(0);
+		
 		$.each($('#equip .' + target + ' > div'), function() {
 			var key = $(this).attr('class');
-			if(key != 'weapon_1' && key != 'weapon_2') {
+			
+			var break_loop = false;
+			if($('#equip .replacement .order').val() == 0 && !diff_equip[key] && target == 'replacement')
+				break_loop = true;
+				
+			if(key != 'weapon_1' && key != 'weapon_2' && !break_loop) {
 				var total = {
 					main_attribute: parseFloat($('#' + target + ' .attribute .main_attribute').val()),
 					critical_chance: parseFloat($('#' + target + ' .attribute .critical_chance').val()),
@@ -381,16 +488,29 @@ $(function() {
 				
 				$.each($('#equip .' + target + ' .' + key + ' input'), function() {
 					total[$(this).attr('class')] -= parseFloat($(this).val());
-					
 				});
 				
-				var weapon_attack_per_second_1 = parseFloat($('#equip .' + target + ' .weapon_attack_per_second_1').val());
-				var weapon_min_damage_1 = parseFloat($('#equip .' + target + ' .weapon_min_damage_1').val());;
-				var weapon_max_damage_1 = parseFloat($('#equip .' + target + ' .weapon_max_damage_1').val());;
+				if($('#equip .replacement .order').val() == 0 && !diff_equip['weapon_1'] && target == 'replacement') {
+					var weapon_attack_per_second_1 = parseFloat($('#equip .based .weapon_attack_per_second_1').val());
+					var weapon_min_damage_1 = parseFloat($('#equip .based .weapon_min_damage_1').val());
+					var weapon_max_damage_1 = parseFloat($('#equip .based .weapon_max_damage_1').val());
+				}
+				else {
+					var weapon_attack_per_second_1 = parseFloat($('#equip .' + target + ' .weapon_attack_per_second_1').val());
+					var weapon_min_damage_1 = parseFloat($('#equip .' + target + ' .weapon_min_damage_1').val());
+					var weapon_max_damage_1 = parseFloat($('#equip .' + target + ' .weapon_max_damage_1').val());
+				}
 				
-				var weapon_attack_per_second_2 = parseFloat($('#equip .' + target + ' .weapon_attack_per_second_2').val());;
-				var weapon_min_damage_2 = parseFloat($('#equip .' + target + ' .weapon_min_damage_2').val());;
-				var weapon_max_damage_2 = parseFloat($('#equip .' + target + ' .weapon_max_damage_2').val());;
+				if($('#equip .replacement .order').val() == 0 && !diff_equip['weapon_2'] && target == 'replacement') {
+					var weapon_attack_per_second_2 = parseFloat($('#equip .based .weapon_attack_per_second_2').val());
+					var weapon_min_damage_2 = parseFloat($('#equip .based .weapon_min_damage_2').val());
+					var weapon_max_damage_2 = parseFloat($('#equip .based .weapon_max_damage_2').val());
+				}
+				else {
+					var weapon_attack_per_second_2 = parseFloat($('#equip .' + target + ' .weapon_attack_per_second_2').val());
+					var weapon_min_damage_2 = parseFloat($('#equip .' + target + ' .weapon_min_damage_2').val());
+					var weapon_max_damage_2 = parseFloat($('#equip .' + target + ' .weapon_max_damage_2').val());
+				}
 				
 				var main_attribute = total['main_attribute'];
 				var critical_chance = total['critical_chance'];
@@ -411,7 +531,11 @@ $(function() {
 					average_aps = 1;
 				
 				// Skill bonus damage
-				var skill_damage = parseFloat($('#' + target + ' .skill .damage').val());
+				if($('#equip .replacement .order').val() == 0 && !diff_equip['skill'] && target == 'replacement')
+					var skill_damage = parseFloat($('#based .skill .damage').val());
+				else
+					var skill_damage = parseFloat($('#' + target + ' .skill .damage').val());
+					
 				var dps = parseFloat($('#' + target + ' .attribute .damage_per_second').val());
 				
 				// Damage per second
@@ -423,7 +547,7 @@ $(function() {
 				minor_dps *= skill_damage / 100 + 1;
 				minor_dps = dps - minor_dps;
 				minor_dps = parseInt(minor_dps, 10);
-
+				
 				$('#equip .' + target + ' .' + key + ' .minor_dps').text(minor_dps + ' DPS');
 			}
 		});
