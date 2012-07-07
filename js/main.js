@@ -96,8 +96,10 @@ $(function() {
 
 	// Load Profile
 	function loadProfile() {
-		if(order == null)
+		if(order == null) {
 			order = 1;
+			setCookie('order', order);
+		}
 		else
 			order = parseInt(order, 10);
 		
@@ -123,6 +125,7 @@ $(function() {
 					weapon_1: {},
 					weapon_2: {}
 				};
+				setCookie('character' + key, Base64.encode(JSON.stringify(character[key])));
 			}
 			else
 				character[key] = JSON.parse(Base64.decode(character[key]));
@@ -146,16 +149,24 @@ $(function() {
 	// Reset
 	function reset() {
 		// Set selected character
-		$('#equip .based .order').val(order);
+		$('#equip .based .order').val(parseInt(getCookie('order'), 10));
 		
 		// Reset field
-		$('input').val(0);
-		$('.minor_dps').text(0);
+		if($('#equip .replacement .order').val() == 0) {
+			$('input').val(0);
+			$('.minor_dps').text(0);
+		}
+		else {
+			$('#based .skill input').val(0);
+			$('#equip .based input').val(0);
+			$('#equip .based .minor_dps').text(0);
+		}
 
 		// Set default point
 		$.each(default_point, function(key, value) {
 			$('#based .attribute .' + key).val(value);
-			$('#replacement .attribute .' + key).val(value);
+			if($('#equip .replacement .order').val() == 0)
+				$('#replacement .attribute .' + key).val(value);
 		});
 		
 		// Set character data
@@ -201,8 +212,25 @@ $(function() {
 			var key = $(this).attr('class');
 			var data = Base64.decode($(this).val());
 
-			if(typeof(JSON.parse(data)) == 'object')
+			if(typeof(JSON.parse(data)) == 'object') {
 				setCookie('character' + key, $(this).val());
+
+				if($('#equip .based .order').val() == key) {
+					based = JSON.parse(Base64.decode(getCookie('character' + key)));
+					
+					// Reset Profile
+					reset();
+					totalAttribute(based, 'based');
+					diff();
+					totalAttribute(replacement, 'replacement');
+					calculate(based, 'based');
+					calculate(replacement, 'replacement');
+					
+					// Minor DPS
+					calculateMinorDPS('based');
+					calculateMinorDPS('replacement');
+				}
+			}
 		});
 
 		// If User change character profile
@@ -234,7 +262,7 @@ $(function() {
 			order = $(this).val();
 			
 			if(order != 0) {
-				temp = character[order];
+				temp = JSON.parse(Base64.decode(getCookie('character' + order)));
 				$.each(temp, function(key, value) {
 					$.each(value, function(key2, value2) {
 						if(key == 'skill')
