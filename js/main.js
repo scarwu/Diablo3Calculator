@@ -1,233 +1,153 @@
 // JavaScript Document
 'use strict';
 
+var template = JSON.stringify({
+	skill: {
+		damage: 0,
+		critical_chance: 0,
+		critical_damage: 0
+	},
+	belt: {},
+	boots: {},
+	braces: {},
+	chest: {},
+	glovers: {},
+	helm: {},
+	pants: {},
+	shoulders: {},
+	amulet: {},
+	ring_1: {},
+	ring_2: {},
+	weapon_1: {},
+	weapon_2: {}
+});
+var based = JSON.parse(template);
+var replacement = JSON.parse(template);
+var temp = JSON.parse(template);
+
+var default_point = {
+	main_attribute : 187,
+	skill_damage : 0,
+	attack_per_speed: 1,
+	critical_chance : 5,
+	critical_damage : 50
+};
+var diff_equip = {
+	skill: false,
+	belt: false,
+	boots: false,
+	braces: false,
+	chest: false,
+	glovers: false,
+	helm: false,
+	pants: false,
+	shoulders: false,
+	amulet: false,
+	ring_1: false,
+	ring_2: false,
+	weapon_1: false,
+	weapon_2: false
+};
+
 $(function() {
-	var character = {
-		1: getCookie('character1'),
-		2: getCookie('character2'),
-		3: getCookie('character3'),
-		4: getCookie('character4'),
-		5: getCookie('character5')
-	};
-	var order = getCookie('order');
-	var based = {
-		skill: {
-			damage: 0,
-			critical_chance: 0,
-			critical_damage: 0
-		},
-		belt: {},
-		boots: {},
-		braces: {},
-		chest: {},
-		glovers: {},
-		helm: {},
-		pants: {},
-		shoulders: {},
-		amulet: {},
-		ring_1: {},
-		ring_2: {},
-		weapon_1: {},
-		weapon_2: {}
-	};
-	var replacement = {
-		skill: {
-			damage: 0,
-			critical_chance: 0,
-			critical_damage: 0
-		},
-		belt: {},
-		boots: {},
-		braces: {},
-		chest: {},
-		glovers: {},
-		helm: {},
-		pants: {},
-		shoulders: {},
-		amulet: {},
-		ring_1: {},
-		ring_2: {},
-		weapon_1: {},
-		weapon_2: {}
-	};
-	var temp = {
-		skill: {
-			damage: 0,
-			critical_chance: 0,
-			critical_damage: 0
-		},
-		belt: {},
-		boots: {},
-		braces: {},
-		chest: {},
-		glovers: {},
-		helm: {},
-		pants: {},
-		shoulders: {},
-		amulet: {},
-		ring_1: {},
-		ring_2: {},
-		weapon_1: {},
-		weapon_2: {}
-	};
-	var default_point = {
-		main_attribute : 187,
-		skill_damage : 0,
-		attack_per_speed: 1,
-		critical_chance : 5,
-		critical_damage : 50
-	};
-	var diff_equip = {
-		skill: false,
-		belt: false,
-		boots: false,
-		braces: false,
-		chest: false,
-		glovers: false,
-		helm: false,
-		pants: false,
-		shoulders: false,
-		amulet: false,
-		ring_1: false,
-		ring_2: false,
-		weapon_1: false,
-		weapon_2: false
-	};
-
-	// Load Profile
-	function loadProfile() {
-		if(order == null) {
-			order = 1;
-			setCookie('order', order);
+	// Init Profile
+	function initProfile() {
+		if(getCookie('order') == null) {
+			setCookie('order', 1);
 		}
-		else
-			order = parseInt(order, 10);
 		
-		$.each(character, function(key, value) {
-			if(character[key] == null) {
-				character[key] = {
-					skill: {
-						damage: 0,
-						critical_chance: 0,
-						critical_damage: 0
-					},
-					belt: {},
-					boots: {},
-					braces: {},
-					chest: {},
-					glovers: {},
-					helm: {},
-					pants: {},
-					shoulders: {},
-					amulet: {},
-					ring_1: {},
-					ring_2: {},
-					weapon_1: {},
-					weapon_2: {}
-				};
-				setCookie('character' + key, Base64.encode(JSON.stringify(character[key])));
+		for(var order = 1;order <= 5;order++) {
+			if(getCookie('equip' + order) == null) {
+				setCookie('equip' + order, Base64.encode(template));
 			}
-			else
-				character[key] = JSON.parse(Base64.decode(character[key]));
-		});
-		
-		$.each(character, function(key, value) {
-			$('#setting .' + key).text(Base64.encode(JSON.stringify(character[key])));
-		});
-	}
-
-	// Svae Profile
-	function saveProfile() {
-		character[order] = based;
-		
-		setCookie('order', order);
-		setCookie('character' + order, Base64.encode(JSON.stringify(character[order])));
-		
-		$('#setting .' + order).text(Base64.encode(JSON.stringify(character[order])));
+		}
 	}
 
 	// Reset
-	function reset() {
+	function reset(data, target) {
 		// Set selected character
-		$('#equip .based .order').val(parseInt(getCookie('order'), 10));
+		if(target == 'based')
+			$('#equip .based .order').val(getCookie('order'));
 		
-		// Reset field
-		if($('#equip .replacement .order').val() == 0) {
-			$('input').val(0);
-			$('.minor_dps').text(0);
-		}
-		else {
-			$('#based .skill input').val(0);
-			$('#equip .based input').val(0);
-			$('#equip .based .minor_dps').text(0);
-		}
+		$('#' + target + ' .skill input').val(0);
+		$('#equip .' + target + ' input').val(0);
+		$('#equip .' + target + ' .minor_dps').text(0);
 
 		// Set default point
 		$.each(default_point, function(key, value) {
-			$('#based .attribute .' + key).val(value);
-			if($('#equip .replacement .order').val() == 0)
-				$('#replacement .attribute .' + key).val(value);
+			$('#' + target + ' .attribute .' + key).val(value);
 		});
 		
 		// Set character data
-		$.each(based, function(key, value) {
+		$.each(data, function(key, value) {
 			$.each(value, function(key2, value2) {
 				if(key == 'skill')
-					$('#based .skill .' + key2).val(value2);
+					$('#' + target + ' .skill .' + key2).val(value2);
 				else
-					$('#equip .based .' + key + ' .' + key2).val(value2);
+					$('#equip .' + target + ' .' + key + ' .' + key2).val(value2);
 			});
 		});
 	}
 	
+	$('#nav .equip').click(function() {
+		$('#equip').show();
+		$('#setting').hide();
+	});
+
+	$('#nav .setting').click(function() {
+		$('#setting').show();
+		$('#equip').hide();
+	});
+	
 	$(document).ready(function() {
-		// Load Data
-		loadProfile();
+		// Init Data
+		initProfile();
 		
 		// Load
-		based = character[order];
+		based = JSON.parse(Base64.decode(getCookie('equip' + getCookie('order'))));
 		
-		reset();
+		// Reset
+		$('input').val(0);
+		$('.minor_dps').text(0);
+		
+		// Based
+		reset(based, 'based');
 		totalAttribute(based, 'based');
-		diff();
-		totalAttribute(replacement, 'replacement');
 		calculate(based, 'based');
-		calculate(replacement, 'replacement');
-		
-		// Minor DPS
 		calculateMinorDPS('based');
+		
+		// Replacement
+		createDiffReplacement();
+		reset(temp, 'replacement');
+		totalAttribute(replacement, 'replacement');
+		calculate(replacement, 'replacement');
 		calculateMinorDPS('replacement');
-
-		$('#nav .equip').click(function() {
-			$('#equip').show();
-			$('#setting').hide();
-		});
-	
-		$('#nav .setting').click(function() {
-			$('#setting').show();
-			$('#equip').hide();
-		});
+		
+		// Setting
+		for(var index = 1;index <= 5;index++)
+			$('#setting .' + index).val(getCookie('equip' + index));
 		
 		$('#setting textarea').change(function() {
 			var key = $(this).attr('class');
 			var data = Base64.decode($(this).val());
 
 			if(typeof(JSON.parse(data)) == 'object') {
-				setCookie('character' + key, $(this).val());
+				setCookie('equip' + key, $(this).val());
 
-				if($('#equip .based .order').val() == key) {
-					based = JSON.parse(Base64.decode(getCookie('character' + key)));
+				if(getCookie('order') == key) {
+					based = JSON.parse(Base64.decode(getCookie('equip' + key)));
 					
-					// Reset Profile
-					reset();
+					// Based
+					reset(based, 'based');
 					totalAttribute(based, 'based');
-					diff();
-					totalAttribute(replacement, 'replacement');
 					calculate(based, 'based');
-					calculate(replacement, 'replacement');
-					
-					// Minor DPS
 					calculateMinorDPS('based');
+					
+					// Replacement
+					createDiffReplacement();
+					reset(temp, 'replacement');
+					totalAttribute(replacement, 'replacement');
+					calculate(replacement, 'replacement');
 					calculateMinorDPS('replacement');
 				}
 			}
@@ -235,64 +155,27 @@ $(function() {
 
 		// If User change character profile
 		$('#equip .based .order').change(function() {
-			order = $(this).val();
-			based = character[order];
+			setCookie('order', $(this).val());
 			
-			// Reset Profile
-			reset();
+			based = JSON.parse(Base64.decode(getCookie('equip' + getCookie('order'))));
+
+			// Based
+			reset(based, 'based');
 			totalAttribute(based, 'based');
-			diff();
-			totalAttribute(replacement, 'replacement');
 			calculate(based, 'based');
-			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('based');
-			calculateMinorDPS('replacement');
 			
-			// Save data
-			saveProfile();
+			// Replacement
+			createDiffReplacement();
+			reset(temp, 'replacement');
+			totalAttribute(replacement, 'replacement');
+			calculate(replacement, 'replacement');
+			calculateMinorDPS('replacement');
 		});
 		
 		$('#equip .replacement .order').change(function() {
-			$('#replacement .skill input').val(0);
-			$('#equip .replacement input').val(0);
-			$('#equip .replacement .minor_dps').text(0);
-			
-			order = $(this).val();
-			
-			if(order != 0) {
-				temp = JSON.parse(Base64.decode(getCookie('character' + order)));
-				$.each(temp, function(key, value) {
-					$.each(value, function(key2, value2) {
-						if(key == 'skill')
-							$('#replacement .skill .' + key2).val(value2);
-						else
-							$('#equip .replacement .' + key + ' .' + key2).val(value2);
-					});
-				});
-			}
-			else {
-				temp = {
-					skill: {
-						damage: 0,
-						critical_chance: 0,
-						critical_damage: 0
-					},
-					belt: {},
-					boots: {},
-					braces: {},
-					chest: {},
-					glovers: {},
-					helm: {},
-					pants: {},
-					shoulders: {},
-					amulet: {},
-					ring_1: {},
-					ring_2: {},
-					weapon_1: {},
-					weapon_2: {}
-				};
+			if($(this).val() == 0) {
+				temp = JSON.parse(template);
 				diff_equip = {
 					skill: false,
 					belt: false,
@@ -310,12 +193,14 @@ $(function() {
 					weapon_2: false
 				};
 			}
-
-			diff();
+			else {
+				temp = JSON.parse(Base64.decode(getCookie('equip' + $(this).val())));
+			}
+			
+			createDiffReplacement();
+			reset(temp, 'replacement');
 			totalAttribute(replacement, 'replacement');
 			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('replacement');
 		});
 
@@ -327,21 +212,24 @@ $(function() {
 			$(this).val(based['skill'][key]);
 			based['skill'][key] = $(this).val();
 	
-			if(based['skill'][key] == 'NaN')
-				based['skill'][key] = 0;
-	
-			if(based['skill'][key] < 0)
+			if(based['skill'][key] == 'NaN' || based['skill'][key] < 0)
 				based['skill'][key] = 0;
 	
 			$(this).val(based['skill'][key]);
-	
-			saveProfile();
-			diff();
+
+			setCookie('equip' + getCookie('order'), Base64.encode(JSON.stringify(based)));
+
+			// Based
+			reset(based, 'based');
+			totalAttribute(based, 'based');
 			calculate(based, 'based');
-			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('based');
+			
+			// Replacement
+			createDiffReplacement();
+			reset(temp, 'replacement');
+			totalAttribute(replacement, 'replacement');
+			calculate(replacement, 'replacement');
 			calculateMinorDPS('replacement');
 		});
 	
@@ -353,23 +241,24 @@ $(function() {
 			$(this).val(based[key1][key2]);
 			based[key1][key2] = $(this).val();
 	
-			if(based[key1][key2] == 'NaN')
-				based[key1][key2] = 0;
-	
-			if(based[key1][key2] < 0)
+			if(based[key1][key2] == 'NaN' || based[key1][key2] < 0)
 				based[key1][key2] = 0;
 	
 			$(this).val(based[key1][key2]);
+		
+			setCookie('equip' + getCookie('order'), Base64.encode(JSON.stringify(based)));
 	
-			saveProfile();
+			// Based
+			reset(based, 'based');
 			totalAttribute(based, 'based');
-			diff();
-			totalAttribute(replacement, 'replacement');
 			calculate(based, 'based');
-			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('based');
+			
+			// Replacement
+			createDiffReplacement();
+			reset(temp, 'replacement');
+			totalAttribute(replacement, 'replacement');
+			calculate(replacement, 'replacement');
 			calculateMinorDPS('replacement');
 		});
 
@@ -381,10 +270,7 @@ $(function() {
 			$(this).val(temp['skill'][key]);
 			temp['skill'][key] = $(this).val();
 	
-			if(temp['skill'][key] == 'NaN')
-				temp['skill'][key] = 0;
-	
-			if(temp['skill'][key] < 0)
+			if(temp['skill'][key] == 'NaN' || temp['skill'][key] < 0)
 				temp['skill'][key] = 0;
 	
 			$(this).val(temp['skill'][key]);
@@ -395,10 +281,11 @@ $(function() {
 					diff_equip['skill'] = true;
 			});
 			
-			diff();
+			// Replacement
+			createDiffReplacement();
+			reset(temp, 'replacement');
+			totalAttribute(replacement, 'replacement');
 			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('replacement');
 		});
 
@@ -410,10 +297,7 @@ $(function() {
 			$(this).val(temp[key1][key2]);
 			temp[key1][key2] = $(this).val();
 	
-			if(temp[key1][key2] == 'NaN')
-				temp[key1][key2] = 0;
-	
-			if(temp[key1][key2] < 0)
+			if(temp[key1][key2] == 'NaN' || temp[key1][key2] < 0)
 				temp[key1][key2] = 0;
 	
 			$(this).val(temp[key1][key2]);
@@ -424,38 +308,19 @@ $(function() {
 					diff_equip[key1] = true;
 			});
 			
-			diff();
+			// Replacement
+			createDiffReplacement();
+			reset(temp, 'replacement');
 			totalAttribute(replacement, 'replacement');
 			calculate(replacement, 'replacement');
-			
-			// Minor DPS
 			calculateMinorDPS('replacement');
 		});
 	});
 	
 	// Find difference
-	function diff() {
+	function createDiffReplacement() {
 		if($('#equip .replacement .order').val() == 0) {
-			replacement = {
-				skill: {
-					damage: 0,
-					critical_chance: 0,
-					critical_damage: 0
-				},
-				belt: {},
-				boots: {},
-				braces: {},
-				chest: {},
-				glovers: {},
-				helm: {},
-				pants: {},
-				shoulders: {},
-				amulet: {},
-				ring_1: {},
-				ring_2: {},
-				weapon_1: {},
-				weapon_2: {}
-			};
+			replacement = JSON.parse(template);
 			$.each(diff_equip, function(key, value) {
 				if(value) {
 					replacement[key] = temp[key];
@@ -465,8 +330,9 @@ $(function() {
 				}
 			});
 		}
-		else
+		else {
 			replacement = temp;
+		}
 	}
 
 	function totalAttribute(data, target) {
