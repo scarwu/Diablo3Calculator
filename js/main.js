@@ -218,6 +218,7 @@ $(function() {
 			$(this).val(based['skill'][key]);
 
 			setCookie('equip' + getCookie('order'), Base64.encode(JSON.stringify(based)));
+			$('#setting .' + getCookie('order')).val(getCookie('equip' + getCookie('order')));
 
 			// Based
 			reset(based, 'based');
@@ -247,6 +248,7 @@ $(function() {
 			$(this).val(based[key1][key2]);
 		
 			setCookie('equip' + getCookie('order'), Base64.encode(JSON.stringify(based)));
+			$('#setting .' + getCookie('order')).val(getCookie('equip' + getCookie('order')));
 	
 			// Based
 			reset(based, 'based');
@@ -417,7 +419,7 @@ $(function() {
 				var attack_per_second_2 = weapon_attack_per_second_2 * (attack_speed / 100 + 1);
 		
 				if(attack_per_second_2 != 0)
-					var average_aps = (attack_per_second_1 + attack_per_second_2) / 2;
+					var average_aps = (attack_per_second_1 + attack_per_second_2) / 2 * 1.15;
 				else
 					var average_aps = attack_per_second_1;
 				
@@ -433,7 +435,10 @@ $(function() {
 				var dps = parseFloat($('#' + target + ' .attribute .damage_per_second').val());
 				
 				// Damage per second
-				var minor_dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
+				if(attack_per_second_2 != 0)
+					var minor_dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 4;
+				else
+					var minor_dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
 				minor_dps += (min_damage + max_damage) / 2;
 				minor_dps *= average_aps;
 				minor_dps *= main_attribute / 100 + 1;
@@ -495,7 +500,7 @@ $(function() {
 		var attack_per_second_2 = weapon_attack_per_second_2 * (attack_speed / 100 + 1);
 
 		if(attack_per_second_2 != 0)
-			var average_aps = (attack_per_second_1 + attack_per_second_2) / 2;
+			var average_aps = (attack_per_second_1 + attack_per_second_2) / 2 * 1.15;
 		else
 			var average_aps = attack_per_second_1;
 		
@@ -509,7 +514,10 @@ $(function() {
 		var skill_damage = parseFloat(data['skill']['damage']);
 		
 		// Damage per second
-		var dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
+		if(attack_per_second_2 != 0)
+			var dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 4;
+		else
+			var dps = (weapon_min_damage_1 + weapon_max_damage_1 + weapon_min_damage_2 + weapon_max_damage_2) / 2;
 		dps += (min_damage + max_damage) / 2;
 		dps *= average_aps;
 		dps *= main_attribute / 100 + 1;
