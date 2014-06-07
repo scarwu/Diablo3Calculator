@@ -1,321 +1,53 @@
 <!doctype html>
-<html lang="zh-tw" class="no-js">
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta property="og:description" name="description" content="Diablo III Calculator">
+    <meta property="og:title" content="Diablo III Calculator">
+    <meta property="og:url" content="http://scar.simcz.tw/Diablo3Calculator/">
+    <meta property="og:image" content="http://scar.simcz.tw/images/icon.jpg">
+    <meta property="og:type" content="website">
 
-	<title>Diablo III - 計算機</title>
-	<meta name="viewport" content="width=640, initial-scale=1">
-	
-	<!-- Load Cascading Style Sheets -->
-	<link rel="stylesheet" href="css/html5.css">
-	<link rel="stylesheet" href="css/main.css">
+    <title>Diablo III Calculator</title>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="canonical" href="http://scar.simcz.tw/Diablo3Calculator/">
+    <link rel="author" href="https://plus.google.com/+ScarWu">
+    <link rel="image_src" href="http://scar.simcz.tw/images/icon.jpg">
+    <link rel="shortcut icon" href="http://scar.simcz.tw/favicon.ico">
 </head>
 <body>
-	<div id="header">
-		<h1>Diablo III - 計算機</h1>
-	</div>
-	
-	<div id="main">
-		<div id="nav">
-			<span><a href="javascript:void(0);" class="equip">裝備比較</a></span>
-			<span><a href="javascript:void(0);" class="setting">設定匯入</a></span>
-			<span><a href="http://scar.simcz.tw/article/2012/07/18/diablo-3-calculator-readme/" target="_blank" class="readme">使用說明</a></span>
-		</div>
-		<div id="based">
-			<h2>原始數值</h2>
-			<div class="attribute">
-				<h4>數值統計</h4>
-				<label><span>主要屬性</span><input disabled="disabled" type="text" class="main_attribute" /></label>
-				<label><span>爆擊機率</span><input disabled="disabled" type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input disabled="disabled" type="text" class="critical_damage" /></label>
-				<label><span>每秒攻擊</span><input disabled="disabled" type="text" class="attack_per_second" /></label>
-				<label><span>每秒傷害</span><input disabled="disabled" type="text" class="damage_per_second" /></label>
-				<label><span>普傷範圍</span><input disabled="disabled" type="text" class="normal_damage_range" /></label>
-				<label><span>爆傷範圍</span><input disabled="disabled" type="text" class="critical_damage_range" /></label>
-			</div>
-			<div class="total">
-				<h4>屬性總和</h4>
-				<label><span>主要屬性</span><input disabled="disabled" type="text" class="main_attribute" /></label>
-				<label><span>攻擊加速</span><input disabled="disabled" type="text" class="attack_speed" /></label>
-				<label><span>爆擊機率</span><input disabled="disabled" type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input disabled="disabled" type="text" class="critical_damage" /></label>
-				<label><span>最小傷害</span><input disabled="disabled" type="text" class="min_damage" /></label>
-				<label><span>最大傷害</span><input disabled="disabled" type="text" class="max_damage" /></label>
-			</div>
-			<div class="skill">
-				<h4>技能加成</h4>
-				<label><span>技能增傷</span><input type="text" class="damage" /></label>
-				<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-			</div>
-		</div>
-		<div id="equip">
-			<h2>裝備比較</h2>
-			<div class="based">
-				<select class="order">
-					<option value="1">裝備設定檔 1</option>
-					<option value="2">裝備設定檔 2</option>
-					<option value="3">裝備設定檔 3</option>
-					<option value="4">裝備設定檔 4</option>
-					<option value="5">裝備設定檔 5</option>
-				</select>
-				<div class="helm">
-					<h4>頭盔 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="chest">
-					<h4>胸甲 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="belt">
-					<h4>腰帶 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="pants">
-					<h4>褲子 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="boots">
-					<h4>鞋子 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="shoulders">
-					<h4>護肩 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="braces">
-					<h4>護腕 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-				</div>
-				<div class="glovers">
-					<h4>手套 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="amulet">
-					<h4>護身符 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="ring_1">
-					<h4>戒指 1 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="ring_2">
-					<h4>戒指 2 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="weapon_1">
-					<h4>主手 - <span class="minor_dps"></span></h4>
-					<label><span>武器小傷</span><input type="text" class="weapon_min_damage_1" /></label>
-					<label><span>武器大傷</span><input type="text" class="weapon_max_damage_1" /></label>
-					<label><span>攻擊速度</span><input type="text" class="weapon_attack_per_second_1" /></label>
-					<br />
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-				</div>
-				<div class="weapon_2">
-					<h4>副手 - <span class="minor_dps"></span></h4>
-					<label><span>武器小傷</span><input type="text" class="weapon_min_damage_2" /></label>
-					<label><span>武器大傷</span><input type="text" class="weapon_max_damage_2" /></label>
-					<label><span>攻擊速度</span><input type="text" class="weapon_attack_per_second_2" /></label>
-					<br />
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-			</div>
-			<div class="replacement">
-				<select class="order">
-					<option value="0">裝備差異比較</option>
-					<option value="1">裝備設定檔 1</option>
-					<option value="2">裝備設定檔 2</option>
-					<option value="3">裝備設定檔 3</option>
-					<option value="4">裝備設定檔 4</option>
-					<option value="5">裝備設定檔 5</option>
-				</select>
-				<div class="helm">
-					<h4>頭盔 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="chest">
-					<h4>胸甲 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="belt">
-					<h4>腰帶 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="pants">
-					<h4>褲子 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="boots">
-					<h4>鞋子 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="shoulders">
-					<h4>護肩 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-				</div>
-				<div class="braces">
-					<h4>護腕 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-				</div>
-				<div class="glovers">
-					<h4>手套 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-				<div class="amulet">
-					<h4>護身符 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="ring_1">
-					<h4>戒指 1 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="ring_2">
-					<h4>戒指 2 - <span class="minor_dps"></span></h4>
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-					<label><span>最小傷害</span><input type="text" class="min_damage" /></label>
-					<label><span>最大傷害</span><input type="text" class="max_damage" /></label>
-				</div>
-				<div class="weapon_1">
-					<h4>主手 - <span class="minor_dps"></span></h4>
-					<label><span>武器小傷</span><input type="text" class="weapon_min_damage_1" /></label>
-					<label><span>武器大傷</span><input type="text" class="weapon_max_damage_1" /></label>
-					<label><span>攻擊速度</span><input type="text" class="weapon_attack_per_second_1" /></label>
-					<br />
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-				</div>
-				<div class="weapon_2">
-					<h4>副手 - <span class="minor_dps"></span></h4>
-					<label><span>武器小傷</span><input type="text" class="weapon_min_damage_2" /></label>
-					<label><span>武器大傷</span><input type="text" class="weapon_max_damage_2" /></label>
-					<label><span>攻擊速度</span><input type="text" class="weapon_attack_per_second_2" /></label>
-					<br />
-					<label><span>主要屬性</span><input type="text" class="main_attribute" /></label>
-					<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-					<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-					<label><span>攻擊加速</span><input type="text" class="attack_speed" /></label>
-				</div>
-			</div>
-		</div>
-		<div id="setting" style="display: none;">
-			<h2>設定匯入</h2>
-			<div>
-				<label>
-					<h4>設定檔 1</h4>
-					<textarea class="1"></textarea>
-				</label>
-				<label>
-					<h4>設定檔 2</h4>
-					<textarea class="2"></textarea>
-				</label>
-				<label>
-					<h4>設定檔 3</h4>
-					<textarea class="3"></textarea>
-				</label>
-				<label>
-					<h4>設定檔 4</h4>
-					<textarea class="4"></textarea>
-				</label>
-				<label>
-					<h4>設定檔 5</h4>
-					<textarea class="5"></textarea>
-				</label>
-			</div>
-		</div>
-		<div id="replacement">
-			<h2>加成結果</h2>
-			<div class="attribute">
-				<h4>數值統計</h4>
-				<label><span>主要屬性</span><input disabled="disabled" type="text" class="main_attribute" /></label>
-				<label><span>爆擊機率</span><input disabled="disabled" type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input disabled="disabled" type="text" class="critical_damage" /></label>
-				<label><span>每秒攻擊</span><input disabled="disabled" type="text" class="attack_per_second" /></label>
-				<label><span>每秒傷害</span><input disabled="disabled" type="text" class="damage_per_second" /></label>
-				<label><span>普傷範圍</span><input disabled="disabled" type="text" class="normal_damage_range" /></label>
-				<label><span>爆傷範圍</span><input disabled="disabled" type="text" class="critical_damage_range" /></label>
-			</div>
-			<div class="total">
-				<h4>屬性總和</h4>
-				<label><span>主要屬性</span><input disabled="disabled" type="text" class="main_attribute" /></label>
-				<label><span>攻擊加速</span><input disabled="disabled" type="text" class="attack_speed" /></label>
-				<label><span>爆擊機率</span><input disabled="disabled" type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input disabled="disabled" type="text" class="critical_damage" /></label>
-				<label><span>最小傷害</span><input disabled="disabled" type="text" class="min_damage" /></label>
-				<label><span>最大傷害</span><input disabled="disabled" type="text" class="max_damage" /></label>
-			</div>
-			<div class="skill">
-				<h4>技能加成</h4>
-				<label><span>技能增傷</span><input type="text" class="damage" /></label>
-				<label><span>爆擊機率</span><input type="text" class="critical_chance" /></label>
-				<label><span>爆擊傷害</span><input type="text" class="critical_damage" /></label>
-			</div>
-		</div>
-	</div>
-	
-	<div id="footer">
-		<h4>Copyright (c) 2012 <a href="http://scar.simcz.tw">ScarShow | 刀疤說</a></h4>
-	</div>
-	
-	<!-- Define and Load Javascript -->
-	<script src="js/jquery.js"></script>
-	<script src="js/cookie.js"></script>
-	<script src="js/base64.js"></script>
-	<script src="js/main.js"></script>
-	<script>
-		var _gaq = [['_setAccount', 'UA-30675094-1'], ['_trackPageview']]; (function(d, t) {
-			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-			g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-			s.parentNode.insertBefore(g, s)
-		} (document, 'script'));
-	</script>
+    <header id="header">
+        <h1>Diablo III Calculator</h1>
+    </header>
+
+    <div id="main">
+        <div id="nav"></div>
+        <div id="item"></div>
+        <div id="content"></div>
+    </div>
+
+    <footer id="footer"></footer>
+
+    <div id="fb-root"></div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function asyncLoad(src) {
+            var s = document.createElement('script');
+            s.src = src; s.async = true;
+            var e = document.getElementsByTagName('script')[0];
+            e.parentNode.insertBefore(s, e);
+        }
+        var _gaq = [['_setAccount', 'UA-30675094-3'], ['_trackPageview']];
+        asyncLoad(('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js');
+        asyncLoad('https://apis.google.com/js/plusone.js');
+        asyncLoad('//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1403512429930397&version=v2.0');
+        asyncLoad(('https:' == location.protocol ? 'https' : 'http') + '://platform.twitter.com/widgets.js');
+    </script>
 </body>
 </html>
