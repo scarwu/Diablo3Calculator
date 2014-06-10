@@ -1,2 +1,3 @@
-.project
-.settings
+composer.lock
+vendor
+test
