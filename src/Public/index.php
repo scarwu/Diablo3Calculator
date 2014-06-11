@@ -4,7 +4,7 @@
  * 
  * @package     Diablo III Calculator
  * @author      ScarWu
- * @copyright   Copyright (c) 2014, ScarWu (http://scar.simcz.tw/)
+ * @copyright   Copyright (c) 2012-2014, ScarWu (http://scar.simcz.tw/)
  * @link        http://github.com/scarwu/Diablo3Calculator
  */
 
@@ -20,7 +20,6 @@ require "$root/vendor/autoload.php";
 $app = new Oni\App();
 
 $app->set('controller', "$root/src/Controller");
-$app->set('model', "$root/src/Model");
 $app->set('view', "$root/src/View");
 $app->set('static', "$root/src/Static");
 $app->set('cache', "$root/src/Cache");
