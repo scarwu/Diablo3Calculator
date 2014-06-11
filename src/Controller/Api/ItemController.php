@@ -1,6 +1,6 @@
 <?php
 /**
- * Api/Profile Controller Example 
+ * Api/Item Controller Example 
  * 
  * @package     Diablo III Calculator
  * @author      ScarWu
@@ -14,24 +14,21 @@ use Oni\Controller;
 use Oni\Req;
 use Oni\Res;
 
-class ProfileController extends Controller
+class ItemController extends Controller
 {
     private $url;
 
     public function up()
     {
-        if (3 === count(Req::param())) {
-            list($host, $name, $code) = Req::param();
-            $this->url = "http://$host.battle.net/api/d3/profile/$name-$code/";
-        } elseif (4 === count(Req::param())) {
-            list($host, $name, $code, $id) = Req::param();
-            $this->url = "http://$host.battle.net/api/d3/profile/$name-$code/hero/$id";
+        if (2 === count(Req::param())) {
+            list($host, $item) = Req::param();
+            $this->url = "http://$host.battle.net/api/d3/data/item/$item";
         } else {
             http_response_code(404);
             Res::json([
                 'status' => 404
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            
+
             return false;
         }
     }
