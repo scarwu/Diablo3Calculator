@@ -27,6 +27,11 @@ class ProfileController extends Controller
             list($host, $name, $code, $id) = Req::param();
             $this->url = "http://$host.battle.net/api/d3/profile/$name-$code/hero/$id";
         } else {
+            http_response_code(404);
+            Res::json([
+                'status' => 404
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            
             return false;
         }
     }
@@ -43,6 +48,13 @@ class ProfileController extends Controller
 
         $result = json_decode(curl_exec($client), true);
 
-        Res::json($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        if (null === $result || 'NOTFOUND' === $result['code']) {
+            http_response_code(404);
+            Res::json([
+                'status' => 404
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } else {
+            Res::json($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
     }
 }
